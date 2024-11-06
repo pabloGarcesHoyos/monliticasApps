@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Producto</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1e1e2f;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            gap: 50px;
+        }
+
+        .product-form, .product-list {
+            background-color: #2e2e3f;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 10px 10px 0px #b39ddb;
+            width: 45%;
+        }
+
+        h3 {
+            text-align: center;
+            color: #b39ddb;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group input {
+            background-color: #000;
+            border: none;
+            color: #b39ddb;
+            padding: 10px;
+        }
+
+        .input-group input::placeholder {
+            color: #b39ddb;
+            opacity: 1;
+        }
+
+        .input-group-text {
+            background-color: #b39ddb;
+            border: none;
+            color: #1e1e2f;
+        }
+
+        .btn-add-product {
+            background-color: #b39ddb;
+            color: #1e1e2f;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            box-shadow: 5px 5px 0px #000;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            text-align: center;
+            color: #b39ddb;
+        }
+
+        .btn-delete {
+            background-color: #ff4d4d;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="product-form">
+        <h3>Agregar Producto</h3>
+
+        <!-- Formulario para agregar productos -->
+        <form id="addProductForm" th:action="@{/Products}" method="post">
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-barcode"></i></span>
+                <input type="text" class="form-control" placeholder="SKU" name="sku" required>
+            </div>
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-box"></i></span>
+                <input type="text" class="form-control" placeholder="Nombre del Producto" name="name" required>
+            </div>
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-cash"></i></span>
+                <input type="number" class="form-control" placeholder="Precio" name="price" required>
+            </div>
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-building"></i></span>
+                <input type="text" class="form-control" placeholder="Marca" name="brand" required>
+            </div>
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-shop"></i></span>
+                <input type="text" class="form-control" placeholder="Tienda" name="store" required>
+            </div>
+            <button type="submit" class="btn-add-product">Agregar Producto</button>
+
+        </form>
+
+        <div class="d-flex justify-content-between mt-3">
+            <a th:href="@{/user/home}" class="btn btn-secondary">Cerrar Sesión</a>
+            <a th:href="@{/user/list_users}" class="btn btn-secondary">Usuarios</a>
+        </div>
+
+
+    </div>
+    <div class="product-list">
+        <h3>Lista de Productos</h3>
+        <table class="table table-dark">
+            <thead>
+            <tr>
+                <th>SKU</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Marca</th>
+                <th>Tienda</th>
+                <th>Eliminar</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Itera sobre la lista de productos proporcionada por el controlador -->
+            <tr th:each="product : ${products}">
+                <td th:text="${product.sku}"></td>
+                <td th:text="${product.name}"></td>
+                <td th:text="${product.price}"></td>
+                <td th:text="${product.brand}"></td>
+                <td th:text="${product.store}"></td>
+                <td>
+                    <a th:href="@{/Products/delete/{id}(id=${product.id_product})}" class="btn-delete">Eliminar</a>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
+
